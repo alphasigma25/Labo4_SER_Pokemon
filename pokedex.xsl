@@ -5,9 +5,14 @@
 	<!-- Travail à faire : Compléter les parties <a compléter> de 1 à 10 afin d'obtenir le résultat expliqué dans la vidéo du laboratoire -->
 	<!-- !!!!! Nous vous rendons attentif que vous n'avez PAS LE DROIT de modifier le reste du document, mais uniquement ces parties -->
 
-	</> <!-- ##### A compléter 1 -->
-
-	<> <!-- ##### A compléter 2 -->
+	<xsl:output
+			method = "html"
+			encoding = "UTF-8"
+			doctype-public = "-//W3C//DTD HTML 4.01//EN"
+			doctype-system = "http://www.w3.org/TR/html4/strict.dtd"
+			indent = "yes"
+	/> <!-- ##### A compléter 1 -->
+	<xsl:template match="/pokedex"> <!-- ##### A compléter 2 -->
 
 		<html>
 
@@ -46,11 +51,16 @@
 
 					<div id="accordion">
 
-						<xsl:variable name="types" select="" /> <!-- ##### A compléter 3 : Ici, vous devez trouver l'expression XPath à mettre dans l'attribut select 
-					                                                       Le but est de récupérer les types de pokemon en parcourant tous les enfants <type> de tous les pokemons,
-					                                                       mais sans avoir de doublons à la fin, vous ne pouvez pas mettre explicitement ici les types que vous trouver dans le fichier XML
+						<xsl:variable name="types" select="/*/pokemon/type[not(. = ../following-sibling::pokemon/type)]"/> <!-- ##### A
+						compléter 3 : Ici,
+						vous
+						devez
+						trouver
+						l'expression XPath à mettre dans l'attribut select
+					    Le but est de récupérer les types de pokemon en parcourant tous les enfants <type> de tous les pokemons,
+					    mais sans avoir de doublons à la fin, vous ne pouvez pas mettre explicitement ici les types que vous trouver dans le fichier XML
 
-					                                                       Conseil : Cherchez une astuce sur internet ! -->
+					    Conseil : Cherchez une astuce sur internet ! -->
 
 						<xsl:for-each select="$types">
 
@@ -110,7 +120,7 @@
 
 		</html>
 
-	<> <!-- Fin a compléter 2 -->
+	</xsl:template> <!-- Fin a compléter 2 -->
 
 	<xsl:template name="lister_pokemon">
 
@@ -120,7 +130,10 @@
 
 			<xsl:for-each select="$filtre">
 
-				</> <!-- ##### A compléter 7 : Vous devez trier les pokemons par la valeur numérique de leur ID -->
+				<xsl:sort order="ascending" select="id"/> <!-- ##### A compléter 7 : Vous devez trier les pokemons par
+				 la valeur
+				 numérique de
+				leur ID -->
 				<xsl:apply-templates select="." />
 
 			</xsl:for-each>
@@ -145,7 +158,8 @@
 				<!-- generation = "6" si l'id du pokemon est plus petit ou égal à 721 et plus grand que 649.-->
 				<!-- generation = "7" si l'id du pokemon est plus petit ou égal à 809 et plus grand que 721-->
 
-				<xsl:value-of select="1"><!-- Pour l'instant tous les pokémosn sont de la génération 1, pour que vous ne soyez pas bloqué sur le reste -->
+				<xsl:value-of select="1"></xsl:value-of> <!-- Pour l'instant tous les pokémosn sont de la génération 1,
+				pour que vous ne soyez pas bloqué sur le reste -->
 
 				<!-- Fin A compléter 10 -->
 
@@ -185,14 +199,16 @@
 
 		<img width="100%"
 
-			</> <!-- ##### A compléter 8 : Ici, vous devez étudier le dossier images et vous trouverez facilement l'objectif de ce que vous devez faire ici. Indice : Vous devez utiliser une ou plusieurs 	               fonctions de  XSLT-->
+			<xsl/> <!-- ##### A compléter 8 : Ici, vous devez étudier le dossier images et vous trouverez facilement
+			l'objectif de ce que vous devez faire ici. Indice : Vous devez utiliser une ou plusieurs
+			fonctions de  XSLT-->
 
 				<!-- NB : La sources d'images utilisées provient de :  https://github.com/fanzeyi/pokemon.json    -->
 		</img>
 
 	</xsl:template>
 
-	<> <!-- ##### A compléter 9 -->
+	<xsl:template match="/base"> <!-- ##### A compléter 9 -->
 
 		<table class="table table-stripped">
 			
@@ -219,6 +235,6 @@
 
 		</table>
 
-	<> <!-- Fin à compléter 9 -->
+	</xsl:template> <!-- Fin à compléter 9 -->
 
 </xsl:stylesheet>
