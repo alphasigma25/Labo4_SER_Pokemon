@@ -124,7 +124,7 @@
 
 	<xsl:template name="lister_pokemon">
 
-		</> <!-- ##### A compléter 6 -->
+		<xsl:variable name="filtre" select="filtres" /> <!-- ##### A compléter 6 -->
 
 		<div class="row">
 
@@ -197,7 +197,7 @@
 
 	<xsl:template match="id">
 
-		<img width="100%"
+		<img width="100%">
 
 			<xsl/> <!-- ##### A compléter 8 : Ici, vous devez étudier le dossier images et vous trouverez facilement
 			l'objectif de ce que vous devez faire ici. Indice : Vous devez utiliser une ou plusieurs
