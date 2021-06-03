@@ -51,12 +51,8 @@
 
 					<div id="accordion">
 
-						<xsl:variable name="types" select="/*/pokemon/type[not(. = ../following-sibling::pokemon/type)]"/> <!-- ##### A
-						compléter 3 : Ici,
-						vous
-						devez
-						trouver
-						l'expression XPath à mettre dans l'attribut select
+						<xsl:variable name="types" select="/*/pokemon/type[not(. = ../following-sibling::pokemon/type)]"/>
+                        <!-- ##### A compléter 3 : Ici, vous devez trouver l'expression XPath à mettre dans l'attribut select
 					    Le but est de récupérer les types de pokemon en parcourant tous les enfants <type> de tous les pokemons,
 					    mais sans avoir de doublons à la fin, vous ne pouvez pas mettre explicitement ici les types que vous trouver dans le fichier XML
 
@@ -69,9 +65,9 @@
 								<xsl:attribute name="data-target">
 									<xsl:value-of select="concat('#', .)" />
 								</xsl:attribute>
-								
+
 								<xsl:value-of select="." />
-						    
+
 						    </button>
 
 						</xsl:for-each>
@@ -87,6 +83,9 @@
 								</xsl:attribute>
 
 								<!-- ##### A compléter 4 : Ici, vous devez faire appel au template lister_pokemon en lui passant le bon filtre en paramètre -->
+                                <xsl:call-template name="lister_pokemon">
+                                    <xsl:with-param name="filtre" select="/pokedex/pokemon[type[text() = $type]]/*"/>
+                                </xsl:call-template>
 
 							</div>
 
@@ -98,7 +97,7 @@
 
 			</body>
 
-			<!-- Javascript pour le choix de la génération, à ne pas modifier --> 
+			<!-- Javascript pour le choix de la génération, à ne pas modifier -->
 			<script type="text/javascript">
 
 				generation = $("#choix_generation").val();
@@ -124,13 +123,13 @@
 
 	<xsl:template name="lister_pokemon">
 
-		<xsl:variable name="filtre" select="filtres" /> <!-- ##### A compléter 6 -->
+		<xsl:param name="filtre" select="filtres" /> <!-- ##### A compléter 6 -->
 
 		<div class="row">
 
-			<xsl:for-each select="$filtre">
-
-				<xsl:sort order="ascending" select="id"/> <!-- ##### A compléter 7 : Vous devez trier les pokemons par
+            <xsl:for-each select="$filtre">
+                <!-- TODO n'a pas l'air de marcher -->
+				<xsl:sort order="ascending" select="./name"/> <!-- ##### A compléter 7 : Vous devez trier les pokemons par
 				 la valeur
 				 numérique de
 				leur ID -->
@@ -157,9 +156,29 @@
 				<!-- generation = "5" si l'id du pokemon est plus petit ou égal à 649 et plus grand que 493 -->
 				<!-- generation = "6" si l'id du pokemon est plus petit ou égal à 721 et plus grand que 649.-->
 				<!-- generation = "7" si l'id du pokemon est plus petit ou égal à 809 et plus grand que 721-->
-
-				<xsl:value-of select="1"></xsl:value-of> <!-- Pour l'instant tous les pokémosn sont de la génération 1,
-				pour que vous ne soyez pas bloqué sur le reste -->
+                <xsl:choose>
+                    <xsl:when test="@id &lt;= 151">
+                        <xsl:value-of select="1"/>  <!-- Pour l'instant tous les pokémosn sont de la génération 1, pour que vous ne soyez pas bloqué sur le reste -->
+                    </xsl:when>
+                    <xsl:when test="@id &lt;= 251">
+                        <xsl:value-of select="2"/>
+                    </xsl:when>
+                    <xsl:when test="@id &lt;= 386">
+                        <xsl:value-of select="3"/>
+                    </xsl:when>
+                    <xsl:when test="@id &lt;= 493">
+                        <xsl:value-of select="4"/>
+                    </xsl:when>
+                    <xsl:when test="@id &lt;= 649">
+                        <xsl:value-of select="5"/>
+                    </xsl:when>
+                    <xsl:when test="@id &lt;= 721">
+                        <xsl:value-of select="6"/>
+                    </xsl:when>
+                    <xsl:when test="@id &lt;= 809">
+                        <xsl:value-of select="7"/>
+                    </xsl:when>
+                </xsl:choose>
 
 				<!-- Fin A compléter 10 -->
 
@@ -199,7 +218,9 @@
 
 		<img width="100%">
 
-			<xsl/> <!-- ##### A compléter 8 : Ici, vous devez étudier le dossier images et vous trouverez facilement
+			<xsl:attribute name="src">
+                <xsl:value-of select="images/id"/>
+            </xsl:attribute> <!-- ##### A compléter 8 : Ici, vous devez étudier le dossier images et vous trouverez facilement
 			l'objectif de ce que vous devez faire ici. Indice : Vous devez utiliser une ou plusieurs
 			fonctions de  XSLT-->
 
@@ -211,7 +232,7 @@
 	<xsl:template match="/base"> <!-- ##### A compléter 9 -->
 
 		<table class="table table-stripped">
-			
+
 			<tr>
 				<td>Points de vie (HP)</td>
 				<td><xsl:value-of select="HP" /></td>
