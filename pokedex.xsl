@@ -12,7 +12,7 @@
 			doctype-system = "http://www.w3.org/TR/html4/strict.dtd"
 			indent = "yes"
 	/> <!-- ##### A compléter 1 -->
-	<xsl:template match="/pokedex"> <!-- ##### A compléter 2 -->
+	<xsl:template match="/pokedex"> <!-- ##### A compléter 2 -->
 
 		<html>
 
@@ -84,7 +84,7 @@
 
 								<!-- ##### A compléter 4 : Ici, vous devez faire appel au template lister_pokemon en lui passant le bon filtre en paramètre -->
                                 <xsl:call-template name="lister_pokemon">
-                                    <xsl:with-param name="filtre" select="/pokedex/pokemon[type[text() = $type]]/*"/>
+                                    <xsl:with-param name="filtre" select="/pokedex/pokemon[type[text() = $type]]/."/>
                                 </xsl:call-template>
 
 							</div>
@@ -123,13 +123,13 @@
 
 	<xsl:template name="lister_pokemon">
 
-		<xsl:param name="filtre" select="filtres" /> <!-- ##### A compléter 6 -->
+		<xsl:param name="filtre"/> <!-- ##### A compléter 6 -->
 
-		<div class="row">
+        <div class="row">
 
             <xsl:for-each select="$filtre">
                 <!-- TODO n'a pas l'air de marcher -->
-				<xsl:sort order="ascending" select="./name"/> <!-- ##### A compléter 7 : Vous devez trier les pokemons par
+				<xsl:sort order="descending" select="$filtre/id"/> <!-- ##### A compléter 7 : Vous devez trier les pokemons par
 				 la valeur
 				 numérique de
 				leur ID -->
@@ -157,27 +157,27 @@
 				<!-- generation = "6" si l'id du pokemon est plus petit ou égal à 721 et plus grand que 649.-->
 				<!-- generation = "7" si l'id du pokemon est plus petit ou égal à 809 et plus grand que 721-->
                 <xsl:choose>
-                    <xsl:when test="@id &lt;= 151">
+                    <xsl:when test="id &lt;= 151">
                         <xsl:value-of select="1"/>  <!-- Pour l'instant tous les pokémosn sont de la génération 1, pour que vous ne soyez pas bloqué sur le reste -->
                     </xsl:when>
-                    <xsl:when test="@id &lt;= 251">
+                    <xsl:when test="id &lt;= 251">
                         <xsl:value-of select="2"/>
                     </xsl:when>
-                    <xsl:when test="@id &lt;= 386">
+                    <xsl:when test="id &lt;= 386">
                         <xsl:value-of select="3"/>
                     </xsl:when>
-                    <xsl:when test="@id &lt;= 493">
+                    <xsl:when test="id &lt;= 493">
                         <xsl:value-of select="4"/>
                     </xsl:when>
-                    <xsl:when test="@id &lt;= 649">
+                    <xsl:when test="id &lt;= 649">
                         <xsl:value-of select="5"/>
                     </xsl:when>
-                    <xsl:when test="@id &lt;= 721">
+                    <xsl:when test="id &lt;= 721">
                         <xsl:value-of select="6"/>
                     </xsl:when>
-                    <xsl:when test="@id &lt;= 809">
+                    <xsl:otherwise>
                         <xsl:value-of select="7"/>
-                    </xsl:when>
+                    </xsl:otherwise>
                 </xsl:choose>
 
 				<!-- Fin A compléter 10 -->
@@ -219,7 +219,7 @@
 		<img width="100%">
 
 			<xsl:attribute name="src">
-                <xsl:value-of select="images/id"/>
+                <xsl:value-of select="concat('images/',format-number(number(text()), '000'),'.png')"/>
             </xsl:attribute> <!-- ##### A compléter 8 : Ici, vous devez étudier le dossier images et vous trouverez facilement
 			l'objectif de ce que vous devez faire ici. Indice : Vous devez utiliser une ou plusieurs
 			fonctions de  XSLT-->
@@ -229,7 +229,7 @@
 
 	</xsl:template>
 
-	<xsl:template match="/base"> <!-- ##### A compléter 9 -->
+	<xsl:template match="base"> <!-- ##### A compléter 9 -->
 
 		<table class="table table-stripped">
 
