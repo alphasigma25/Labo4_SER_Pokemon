@@ -12,7 +12,7 @@
 			doctype-system = "http://www.w3.org/TR/html4/strict.dtd"
 			indent = "yes"
 	/> <!-- ##### A compléter 1 -->
-	<xsl:template match="/pokedex"> <!-- ##### A compléter 2 -->
+	<xsl:template match="pokedex"> <!-- ##### A compléter 2 -->
 
 		<html>
 
@@ -51,7 +51,8 @@
 
 					<div id="accordion">
 
-						<xsl:variable name="types" select="/*/pokemon/type[not(. = ../following-sibling::pokemon/type)]"/>
+<!--                        <xsl:variable name="types" select="pokemon/type[not(. = following::pokemon/type)]"/>-->
+                        <xsl:variable name="types" select="pokemon/type[not(. = preceding::pokemon/type)]"/>
                         <!-- ##### A compléter 3 : Ici, vous devez trouver l'expression XPath à mettre dans l'attribut select
 					    Le but est de récupérer les types de pokemon en parcourant tous les enfants <type> de tous les pokemons,
 					    mais sans avoir de doublons à la fin, vous ne pouvez pas mettre explicitement ici les types que vous trouver dans le fichier XML
